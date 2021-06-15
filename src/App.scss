@@ -10,6 +10,8 @@ body {
   font-family: $font;
   padding: 20px 60px;
   max-width: 700px;
+  overflow: auto;
+  height: 100%;
 
   a {
     color: #068ca1;
@@ -18,6 +20,11 @@ body {
     &:hover {
       color: #035763;
     }
+  }
+
+  h3 {
+    margin-block-start: 1.5em;
+    margin-block-end: 0.5em;
   }
 
   b {
@@ -31,10 +38,15 @@ body {
       display: flex;
       align-items: center;
       margin-right: 20px;
+      font-weight: 600;
 
       .icon {
-        width: 20px;
+        height: 24px;
         margin-right: 8px;
+
+        &.veg {
+          height: 20px;
+        }
       }
     }
   }
@@ -59,8 +71,9 @@ body {
   }
 
   footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
+    padding: 20px 0;
     font-style: italic;
   }
 }

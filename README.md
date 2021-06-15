@@ -4,13 +4,11 @@ Uses [a spreadsheet of my collected recipes](https://docs.google.com/spreadsheet
 
 ## TODO
 
-- [ ] Better icons
 - [ ] More styling
-- [ ] Only show details if there are details
-- [ ] Add cuisine indicator
+- [ ] Two column layout w/ iframe?
+- [ ] Options to limit cuisine category
 - [ ] Host on GitHub pages?
 - [ ] Add to portfolio?
-
 
 ## Available Scripts
 

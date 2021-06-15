@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import Tabletop from "tabletop";
-import VegIcon from "./veg-icon.png";
-import MealPrepIcon from "./meal-prep.png";
+import VegIcon from "./img/veg-icon.png";
+import MealPrepIcon from "./img/meal-prep.png";
 import "./App.scss";
 
 const publicSpreadsheetURL =
@@ -34,15 +34,90 @@ function App() {
     setRandomRecipe();
   }, [data, setRandomRecipe]);
 
-  const hasRecipeLink =
-    currRecipe.Recipe.startsWith("http") || currRecipe.Recipe.startsWith("www");
-  const hasIngredients = currRecipe.Ingredients !== "";
-  const hasNotes = currRecipe.Notes !== "";
-  const mealPrepFriendly = currRecipe["Meal preps well"] === "Yes";
-  const vegetarianOnly =
-    currRecipe.Vegetarian === "Yes" && currRecipe.Vegan !== "Yes"; // only show if not also vegan
-  const vegan = currRecipe.Vegan === "Yes";
-  const showDetails = hasNotes || mealPrepFriendly || vegetarianOnly || vegan;
+  const getRecipeContent = () => {
+    if (currRecipe) {
+      const hasRecipeLink =
+        currRecipe.Recipe.startsWith("http") ||
+        currRecipe.Recipe.startsWith("www");
+      const hasCuisine = currRecipe.Cuisine !== "";
+      const hasIngredients = currRecipe.Ingredients !== "";
+      const hasNotes = currRecipe.Notes !== "";
+
+      const mealPrepFriendly = currRecipe["Meal preps well"] === "Yes";
+      const vegetarianOnly =
+        currRecipe.Vegetarian === "Yes" && currRecipe.Vegan !== "Yes"; // only show if not also vegan
+      const vegan = currRecipe.Vegan === "Yes";
+      const showDetails =
+        hasNotes || mealPrepFriendly || vegetarianOnly || vegan;
+
+      return (
+        <>
+          <h2>{currRecipe.Name}</h2>
+          {hasRecipeLink ? (
+            <a
+              href={currRecipe.Recipe}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Link to recipe
+            </a>
+          ) : (
+            <p>{`There's no link for this. Check out the cookbook: ${currRecipe.Recipe}.`}</p>
+          )}
+
+          {hasCuisine && (
+            <>
+              <h3>Cuisine</h3>
+              <p>{currRecipe.Cuisine}</p>
+            </>
+          )}
+
+          {hasIngredients && (
+            <>
+              <h3>Key Ingredients</h3>
+              <p>{currRecipe.Ingredients}</p>
+            </>
+          )}
+
+          {showDetails && (
+            <>
+              <h3>Details</h3>
+              {hasNotes && (
+                <p>
+                  <b>Alayna's Notes:</b>
+                  {` ${currRecipe.Notes}`}
+                </p>
+              )}
+              <div className="iconContainer">
+                {mealPrepFriendly && (
+                  <div className="iconGroup">
+                    <img
+                      src={MealPrepIcon}
+                      className="icon"
+                      alt="Meal prep icon"
+                    />
+                    Meal prep friendly
+                  </div>
+                )}
+                {(vegetarianOnly || vegan) && (
+                  <div className="iconGroup">
+                    <img
+                      src={VegIcon}
+                      className="icon veg"
+                      alt="Vegetarian icon"
+                    />
+                    {vegetarianOnly ? "Vegetarian" : "Vegan"}
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+        </>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <div className="app">
@@ -66,71 +141,7 @@ function App() {
           Refresh recipe
         </button>
 
-        {currRecipe && (
-          <>
-            <h2>{currRecipe.Name}</h2>
-            {hasRecipeLink ? (
-              <a
-                href={currRecipe.Recipe}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Link to recipe
-              </a>
-            ) : (
-              <p>{`There's no link for this. Check out the cookbook: ${currRecipe.Recipe}`}</p>
-            )}
-
-            {hasIngredients && (
-              <>
-                <h3>Key Ingredients</h3>
-                <p>{currRecipe.Ingredients}</p>
-              </>
-            )}
-
-            {showDetails && (
-              <>
-                <h3>Details</h3>
-                {hasNotes && (
-                  <p>
-                    <b>Alayna's Notes:</b>
-                    {` ${currRecipe.Notes}`}
-                  </p>
-                )}
-                <div className="iconContainer">
-                  {mealPrepFriendly && (
-                    <div className="iconGroup">
-                      <img
-                        src={MealPrepIcon}
-                        className="icon"
-                        alt="Meal prep icon"
-                      />
-                      Meal prep friendly
-                    </div>
-                  )}
-                  <div className="iconGroup">
-                    {vegetarianOnly && (
-                      <>
-                        <img
-                          src={VegIcon}
-                          className="icon"
-                          alt="Vegetarian icon"
-                        />
-                        Vegetarian
-                      </>
-                    )}
-                    {vegan && (
-                      <>
-                        <img src={VegIcon} className="icon" alt="Vegan icon" />
-                        Vegan
-                      </>
-                    )}
-                  </div>
-                </div>
-              </>
-            )}
-          </>
-        )}
+        {getRecipeContent()}
       </section>
 
       <footer>
