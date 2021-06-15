@@ -34,73 +34,118 @@ function App() {
     setRandomRecipe();
   }, [data, setRandomRecipe]);
 
+  const hasRecipeLink =
+    currRecipe.Recipe.startsWith("http") || currRecipe.Recipe.startsWith("www");
+  const hasIngredients = currRecipe.Ingredients !== "";
+  const hasNotes = currRecipe.Notes !== "";
+  const mealPrepFriendly = currRecipe["Meal preps well"] === "Yes";
+  const vegetarianOnly =
+    currRecipe.Vegetarian === "Yes" && currRecipe.Vegan !== "Yes"; // only show if not also vegan
+  const vegan = currRecipe.Vegan === "Yes";
+  const showDetails = hasNotes || mealPrepFriendly || vegetarianOnly || vegan;
+
   return (
     <div className="app">
-      <h1>Random Recipe Generator</h1>
-      <p>
-        This generator is based on my{" "}
-        <a
-          href={publicSpreadsheetURL}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Alayna's Recipes
-        </a>{" "}
-        spreadsheet.
-      </p>
+      <header>
+        <h1>Random Recipe Generator</h1>
+        <p>
+          This generator is based on my{" "}
+          <a
+            href={publicSpreadsheetURL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Alayna's Recipes
+          </a>{" "}
+          spreadsheet.
+        </p>
+      </header>
 
-      <button className="refresh" onClick={setRandomRecipe}>
-        Refresh recipe
-      </button>
+      <section>
+        <button className="refresh" onClick={setRandomRecipe}>
+          Refresh recipe
+        </button>
 
-      {currRecipe && (
-        <>
-          <h2>{currRecipe.Name}</h2>
-          {currRecipe.Recipe.startsWith("http") ||
-          currRecipe.Recipe.startsWith("www") ? (
-            <a
-              href={currRecipe.Recipe}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Link to recipe
-            </a>
-          ) : (
-            <p>{`There's no link for this. Check out the cookbook: ${currRecipe.Recipe}`}</p>
-          )}
-
-          <h3>Key Ingredients</h3>
-          <p>{currRecipe.Ingredients}</p>
-
-          <h3>Details</h3>
-          {currRecipe.Notes !== "" && (
-            <p>
-              <b>Alayna's Notes:</b>
-              {` ${currRecipe.Notes}`}
-            </p>
-          )}
-          <div className="iconContainer">
-            {currRecipe["Meal preps well"] === "Yes" && (
-              <div className="iconGroup">
-                <img src={MealPrepIcon} className="icon" alt="Meal prep icon" />
-                Meal prep
-              </div>
+        {currRecipe && (
+          <>
+            <h2>{currRecipe.Name}</h2>
+            {hasRecipeLink ? (
+              <a
+                href={currRecipe.Recipe}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Link to recipe
+              </a>
+            ) : (
+              <p>{`There's no link for this. Check out the cookbook: ${currRecipe.Recipe}`}</p>
             )}
-            {currRecipe.Vegetarian === "Yes" && (
-              <div className="iconGroup">
-                <img src={VegIcon} className="icon" alt="Vegetarian icon" />
-                Vegetarian
-              </div>
+
+            {hasIngredients && (
+              <>
+                <h3>Key Ingredients</h3>
+                <p>{currRecipe.Ingredients}</p>
+              </>
             )}
-            {currRecipe.Vegan === "Yes" && (
-              <div className="iconGroup">
-                <img src={VegIcon} className="icon" alt="Vegan icon" />
-                Vegan
-              </div>
+
+            {showDetails && (
+              <>
+                <h3>Details</h3>
+                {hasNotes && (
+                  <p>
+                    <b>Alayna's Notes:</b>
+                    {` ${currRecipe.Notes}`}
+                  </p>
+                )}
+                <div className="iconContainer">
+                  {mealPrepFriendly && (
+                    <div className="iconGroup">
+                      <img
+                        src={MealPrepIcon}
+                        className="icon"
+                        alt="Meal prep icon"
+                      />
+                      Meal prep friendly
+                    </div>
+                  )}
+                  <div className="iconGroup">
+                    {vegetarianOnly && (
+                      <>
+                        <img
+                          src={VegIcon}
+                          className="icon"
+                          alt="Vegetarian icon"
+                        />
+                        Vegetarian
+                      </>
+                    )}
+                    {vegan && (
+                      <>
+                        <img src={VegIcon} className="icon" alt="Vegan icon" />
+                        Vegan
+                      </>
+                    )}
+                  </div>
+                </div>
+              </>
             )}
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </section>
+
+      <footer>
+        <p>
+          Check out the source code on{" "}
+          <a
+            href="https://github.com/atruttmann/Random-Recipe-Generator"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+          .
+        </p>
+      </footer>
     </div>
   );
 }

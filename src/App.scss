@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,600;0,700;1,400&display=swap");
 
 $font: "Raleway", sans-serif;
 
@@ -8,7 +8,7 @@ body {
 
 .app {
   font-family: $font;
-  padding: 12px 40px;
+  padding: 20px 60px;
   max-width: 700px;
 
   a {
@@ -56,5 +56,11 @@ body {
     &:hover {
       background-color: rgba(0, 0, 0, 0.1);
     }
+  }
+
+  footer {
+    position: absolute;
+    bottom: 0;
+    font-style: italic;
   }
 }
