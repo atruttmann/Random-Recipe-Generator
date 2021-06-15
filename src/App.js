@@ -1,5 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import Tabletop from "tabletop";
+import VegIcon from "./veg-icon.png";
+import MealPrepIcon from "./meal-prep.png";
+import "./App.scss";
 
 const publicSpreadsheetURL =
   "https://docs.google.com/spreadsheets/d/1dXL6Ej3IREf2VLDP3zs-6QCwhfLphzsbxUmqekCri3c/edit?usp=sharing";
@@ -32,32 +35,73 @@ function App() {
   }, [data, setRandomRecipe]);
 
   return (
-    <>
+    <div className="app">
       <h1>Random Recipe Generator</h1>
       <p>
-        This generator is based on{" "}
-        <a href={publicSpreadsheetURL}>Alayna's Recipes</a> spreadsheet.
+        This generator is based on my{" "}
+        <a
+          href={publicSpreadsheetURL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Alayna's Recipes
+        </a>{" "}
+        spreadsheet.
       </p>
+
+      <button className="refresh" onClick={setRandomRecipe}>
+        Refresh recipe
+      </button>
+
       {currRecipe && (
         <>
           <h2>{currRecipe.Name}</h2>
-          {currRecipe.Recipe.startsWith("http") ? (
-            <a href={currRecipe.Recipe}>Link to recipe</a>
+          {currRecipe.Recipe.startsWith("http") ||
+          currRecipe.Recipe.startsWith("www") ? (
+            <a
+              href={currRecipe.Recipe}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Link to recipe
+            </a>
           ) : (
-            <p>{`Shoot, there's no link for this. Check out the cookbook: ${currRecipe.Recipe}`}</p>
+            <p>{`There's no link for this. Check out the cookbook: ${currRecipe.Recipe}`}</p>
           )}
+
           <h3>Key Ingredients</h3>
-          <p>
-            <i>
-              This is not an exhaustive list! See the recipe link for full
-              details.
-            </i>
-          </p>
           <p>{currRecipe.Ingredients}</p>
+
+          <h3>Details</h3>
+          {currRecipe.Notes !== "" && (
+            <p>
+              <b>Alayna's Notes:</b>
+              {` ${currRecipe.Notes}`}
+            </p>
+          )}
+          <div className="iconContainer">
+            {currRecipe["Meal preps well"] === "Yes" && (
+              <div className="iconGroup">
+                <img src={MealPrepIcon} className="icon" alt="Meal prep icon" />
+                Meal prep
+              </div>
+            )}
+            {currRecipe.Vegetarian === "Yes" && (
+              <div className="iconGroup">
+                <img src={VegIcon} className="icon" alt="Vegetarian icon" />
+                Vegetarian
+              </div>
+            )}
+            {currRecipe.Vegan === "Yes" && (
+              <div className="iconGroup">
+                <img src={VegIcon} className="icon" alt="Vegan icon" />
+                Vegan
+              </div>
+            )}
+          </div>
         </>
       )}
-      <button onClick={setRandomRecipe}>Refresh recipe</button>
-    </>
+    </div>
   );
 }
 
