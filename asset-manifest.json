@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/Random-Recipe-Generator/static/css/main.21632c76.chunk.css",
-    "main.js": "/Random-Recipe-Generator/static/js/main.a78bc529.chunk.js",
-    "main.js.map": "/Random-Recipe-Generator/static/js/main.a78bc529.chunk.js.map",
+    "main.css": "/Random-Recipe-Generator/static/css/main.2de33ad8.chunk.css",
+    "main.js": "/Random-Recipe-Generator/static/js/main.5b3efdab.chunk.js",
+    "main.js.map": "/Random-Recipe-Generator/static/js/main.5b3efdab.chunk.js.map",
     "runtime-main.js": "/Random-Recipe-Generator/static/js/runtime-main.903cd2a4.js",
     "runtime-main.js.map": "/Random-Recipe-Generator/static/js/runtime-main.903cd2a4.js.map",
     "static/js/2.a06e3233.chunk.js": "/Random-Recipe-Generator/static/js/2.a06e3233.chunk.js",
     "static/js/2.a06e3233.chunk.js.map": "/Random-Recipe-Generator/static/js/2.a06e3233.chunk.js.map",
     "index.html": "/Random-Recipe-Generator/index.html",
-    "static/css/main.21632c76.chunk.css.map": "/Random-Recipe-Generator/static/css/main.21632c76.chunk.css.map",
+    "static/css/main.2de33ad8.chunk.css.map": "/Random-Recipe-Generator/static/css/main.2de33ad8.chunk.css.map",
     "static/js/2.a06e3233.chunk.js.LICENSE.txt": "/Random-Recipe-Generator/static/js/2.a06e3233.chunk.js.LICENSE.txt",
     "static/media/meal-prep.3913a584.png": "/Random-Recipe-Generator/static/media/meal-prep.3913a584.png",
     "static/media/veg-icon.d159639d.png": "/Random-Recipe-Generator/static/media/veg-icon.d159639d.png"
@@ -16,7 +16,7 @@
   "entrypoints": [
     "static/js/runtime-main.903cd2a4.js",
     "static/js/2.a06e3233.chunk.js",
-    "static/css/main.21632c76.chunk.css",
-    "static/js/main.a78bc529.chunk.js"
+    "static/css/main.2de33ad8.chunk.css",
+    "static/js/main.5b3efdab.chunk.js"
   ]
 }
