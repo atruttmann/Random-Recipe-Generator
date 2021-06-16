@@ -22,6 +22,11 @@ body {
   display: flex;
   justify-content: center;
 
+  ::selection {
+    color: white;
+    background: #4fa9b0;
+  }
+
   h1,
   h2,
   h3 {
@@ -67,7 +72,7 @@ body {
     background-color: transparent;
 
     &.refresh {
-      margin: 20px 0 8px 0;
+      margin: 8px 0 20px 0;
     }
     &:hover {
       color: black;
@@ -75,9 +80,24 @@ body {
     }
   }
 
+  .recipeData,
+  .recipePreview {
+    height: calc(100vh - #{$app-padding} * 2);
+  }
   .recipeData {
     max-width: 750px;
+    margin-right: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 
+    header {
+      padding-right: $app-padding;
+    }
+    .recipe {
+      overflow: auto;
+      padding-right: $app-padding;
+    }
     .iconContainer {
       display: flex;
 
@@ -99,8 +119,6 @@ body {
   }
   .recipePreview {
     min-width: 50vw;
-    height: calc(100vh - #{$app-padding} * 2);
-    margin-left: $app-padding;
 
     .preview {
       width: 100%;
@@ -126,11 +144,11 @@ body {
 
     .recipeData {
       margin-bottom: 40px;
+      height: auto;
       width: 100%;
     }
     .recipePreview {
       width: 100%;
-      margin-left: 0;
       max-height: 700px;
     }
   }

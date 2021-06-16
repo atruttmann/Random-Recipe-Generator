@@ -53,7 +53,7 @@ function App() {
         hasNotes || mealPrepFriendly || vegetarianOnly || vegan;
 
       return (
-        <>
+        <div className="recipe">
           <h2>{currRecipe.Name}</h2>
 
           <p>
@@ -117,7 +117,7 @@ function App() {
               </div>
             </>
           )}
-        </>
+        </div>
       );
     }
 
@@ -149,11 +149,10 @@ function App() {
             . Note that some recipe websites do not allow previewing within this
             site.
           </p>
+          <button className="refresh" onClick={setRandomRecipe}>
+            Generate new recipe
+          </button>
         </header>
-
-        <button className="refresh" onClick={setRandomRecipe}>
-          Generate new recipe
-        </button>
 
         {getRecipeContent()}
       </div>
@@ -164,6 +163,7 @@ function App() {
             src={currRecipe.Recipe}
             title="Recipe preview"
             className="preview"
+            sandbox
           >
             <p>Your browser does not support iframe.</p>
           </iframe>
