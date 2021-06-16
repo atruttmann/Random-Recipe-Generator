@@ -10,6 +10,11 @@ const publicSpreadsheetURL =
 function App() {
   const [data, setData] = useState([]);
   const [currRecipe, setCurrRecipe] = useState();
+  const hasRecipeLink =
+    currRecipe &&
+    currRecipe.Recipe &&
+    (currRecipe.Recipe.startsWith("http") ||
+      currRecipe.Recipe.startsWith("www"));
 
   // Fetch data on load
   useEffect(() => {
@@ -36,9 +41,6 @@ function App() {
 
   const getRecipeContent = () => {
     if (currRecipe) {
-      const hasRecipeLink =
-        currRecipe.Recipe.startsWith("http") ||
-        currRecipe.Recipe.startsWith("www");
       const hasCuisine = currRecipe.Cuisine !== "";
       const hasIngredients = currRecipe.Ingredients !== "";
       const hasNotes = currRecipe.Notes !== "";
@@ -53,17 +55,20 @@ function App() {
       return (
         <>
           <h2>{currRecipe.Name}</h2>
-          {hasRecipeLink ? (
-            <a
-              href={currRecipe.Recipe}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Link to recipe
-            </a>
-          ) : (
-            <p>{`There's no link for this. Check out the cookbook: ${currRecipe.Recipe}.`}</p>
-          )}
+
+          <p>
+            {hasRecipeLink ? (
+              <a
+                href={currRecipe.Recipe}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Recipe link
+              </a>
+            ) : (
+              `There's no link for this. Check out the cookbook: ${currRecipe.Recipe}.`
+            )}
+          </p>
 
           {hasCuisine && (
             <>
@@ -121,42 +126,53 @@ function App() {
 
   return (
     <div className="app">
-      <header>
-        <h1>Random Recipe Generator</h1>
-        <p>
-          This generator is based on my{" "}
-          <a
-            href={publicSpreadsheetURL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Alayna's Recipes
-          </a>{" "}
-          spreadsheet.
-        </p>
-      </header>
+      <div className="recipeData">
+        <header>
+          <h1>Random Recipe Generator</h1>
+          <p>
+            This generator is based on my{" "}
+            <a
+              href={publicSpreadsheetURL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Alayna's Recipes
+            </a>{" "}
+            spreadsheet. Check out the source code on{" "}
+            <a
+              href="https://github.com/atruttmann/Random-Recipe-Generator"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
+            . Note that some recipe websites do not allow previewing within this
+            site.
+          </p>
+        </header>
 
-      <section>
         <button className="refresh" onClick={setRandomRecipe}>
-          Refresh recipe
+          Generate new recipe
         </button>
 
         {getRecipeContent()}
-      </section>
+      </div>
 
-      <footer>
-        <p>
-          Check out the source code on{" "}
-          <a
-            href="https://github.com/atruttmann/Random-Recipe-Generator"
-            target="_blank"
-            rel="noopener noreferrer"
+      <div className="recipePreview">
+        {hasRecipeLink ? (
+          <iframe
+            src={currRecipe.Recipe}
+            title="Recipe preview"
+            className="preview"
           >
-            GitHub
-          </a>
-          .
-        </p>
-      </footer>
+            <p>Your browser does not support iframe.</p>
+          </iframe>
+        ) : (
+          <div className="preview none">
+            <p>No preview available.</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -4,8 +4,6 @@ Uses [a spreadsheet of my collected recipes](https://docs.google.com/spreadsheet
 
 ## TODO
 
-- [ ] More styling
-- [ ] Two column layout w/ iframe?
 - [ ] Options to limit cuisine category
 - [ ] Host on GitHub pages?
 - [ ] Add to portfolio?
