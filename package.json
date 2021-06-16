@@ -1,5 +1,6 @@
 {
   "name": "random-recipe-generator",
+  "homepage": "https://alaynatruttmann.com/Random-Recipe-Generator/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
