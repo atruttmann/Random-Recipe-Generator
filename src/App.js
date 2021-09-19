@@ -1,11 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
-import Tabletop from "tabletop";
+import Papa from "papaparse";
 import VegIcon from "./img/veg-icon.png";
 import MealPrepIcon from "./img/meal-prep.png";
 import "./App.scss";
-
-const publicSpreadsheetURL =
-  "https://docs.google.com/spreadsheets/d/1dXL6Ej3IREf2VLDP3zs-6QCwhfLphzsbxUmqekCri3c/edit?usp=sharing";
 
 function App() {
   const [data, setData] = useState([]);
@@ -18,12 +15,16 @@ function App() {
 
   // Fetch data on load
   useEffect(() => {
-    Tabletop.init({
-      key: publicSpreadsheetURL,
-      simpleSheet: false,
-    })
-      .then((data) => setData(data["Lunches/Dinners"].elements))
-      .catch((err) => console.warn(err));
+    Papa.parse(
+      "https://docs.google.com/spreadsheets/d/e/2PACX-1vTy8IuDda1LqTeFq3UXFr4_GsX_70-s7iYedIdH2LLOjgSrpUq3OO4nXvT6xMUqAfFa1385XBd6Io2d/pub?output=csv",
+      {
+        download: true,
+        header: true,
+        complete: (results) => {
+          setData(results.data);
+        },
+      }
+    );
   }, []);
 
   // Choose a random recipe
@@ -132,7 +133,7 @@ function App() {
           <p>
             This generator is based on my{" "}
             <a
-              href={publicSpreadsheetURL}
+              href="https://docs.google.com/spreadsheets/d/1dXL6Ej3IREf2VLDP3zs-6QCwhfLphzsbxUmqekCri3c/edit?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
             >
